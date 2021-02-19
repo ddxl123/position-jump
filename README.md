@@ -4,7 +4,7 @@ For example:
 
 // @see / readme.md
 
-Press and hold Ctrl + left mouse button to quickly jump to/ readme.md ” 。
+Press and hold Ctrl + left mouse button to quickly jump to/ "readme.md" 。
 
 Note: the path is based on the file where @ see is written.
 

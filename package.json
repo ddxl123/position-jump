@@ -5,7 +5,7 @@
   "publisher": "long",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gitshan/vscode-extension-comment-aligner.git"
+    "url": "https://github.com/ddxl123/position-jump"
   },
   "version": "0.0.1",
   "engines": {
