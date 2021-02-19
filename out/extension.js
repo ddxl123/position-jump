@@ -12,7 +12,7 @@ function activate(context) {
 }
 exports.activate = activate;
 function provideDefinition(document, position, token) {
-    var _a;
+    var _a, _b;
     const fileName = document.fileName; // 当前文件完整路径
     // const workDir = path.dirname(fileName);// 当前文件所在目录
     // const word = document.getText(document.getWordRangeAtPosition(position));// 当前光标所在单词
@@ -23,13 +23,20 @@ function provideDefinition(document, position, token) {
     // console.log("line: " + line.text);
     // 获取项目根目录
     const rootPath = (_a = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(fileName))) === null || _a === void 0 ? void 0 : _a.uri.path;
-    // 获取 @see 之后的文本
+    // 获取开始路径的角标
     var index = line.text.search("@see");
+    // 含 @see 时才触发
     if (index != -1) {
+        // 获取 @see 之后的文本，包括 targetLine
+        var target = line.text.substring(index + 5, line.text.length);
+        // 分离 targetPath 和 targetLine
+        var targetSplit = target.split(":");
+        var targetPath = targetSplit[0];
+        var targetLine = Number((_b = targetSplit[1]) !== null && _b !== void 0 ? _b : "0");
         // 补全路径
-        var targetPath = rootPath + "/" + line.text.substring(index + 5, line.text.length);
+        var targetPath = rootPath + "/" + targetPath;
         // console.log(targetPath);
-        return new vscode.Location(vscode.Uri.file(targetPath), new vscode.Position(0, 0));
+        return new vscode.Location(vscode.Uri.file(targetPath), new vscode.Position(targetLine, 0));
     }
 }
 // this method is called when your extension is deactivated

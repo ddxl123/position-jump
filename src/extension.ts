@@ -34,16 +34,25 @@ function provideDefinition(
     vscode.Uri.file(fileName)
   )?.uri.path;
 
-  // 获取 @see 之后的文本
+  // 获取开始路径的角标
   var index = line.text.search("@see");
+
+  // 含 @see 时才触发
   if (index != -1) {
+    // 获取 @see 之后的文本，包括 targetLine
+    var target = line.text.substring(index + 5, line.text.length);
+    // 分离 targetPath 和 targetLine
+    var targetSplit = target.split(":");
+
+    var targetPath = targetSplit[0];
+    var targetLine = Number(targetSplit[1] ?? "0");
+
     // 补全路径
-    var targetPath =
-      rootPath + "/" + line.text.substring(index + 5, line.text.length);
+    var targetPath = rootPath + "/" + targetPath;
     // console.log(targetPath);
     return new vscode.Location(
       vscode.Uri.file(targetPath),
-      new vscode.Position(0, 0)
+      new vscode.Position(targetLine, 0)
     );
   }
 }
